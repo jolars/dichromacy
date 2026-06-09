@@ -76,15 +76,19 @@
 %
 % TikZ/pgf shadings (linear and radial gradients) store their colors in PDF
 % \texttt{Shading} dictionaries whose \texttt{Function} carries \texttt{/C0}
-% and \texttt{/C1} color arrays. These objects sit in the page resources, so
-% they are never seen by the \texttt{process\_pdf\_image\_content} callback
-% used for embedded PDF images and they predate any \cs{XC@bcolor} call.
+% and \texttt{/C1} color arrays. These objects sit in the page resources rather
+% than in any content stream, so none of \pkg{cvd}'s other transform paths
+% reach them and they need a dedicated hook.
 %
-% Patch pgf's leaf tuple emitters so the RGB or CMYK tuple that ends up in
-% \texttt{/C0} and \texttt{/C1} is filtered through \texttt{cvd.transform}
-% first. Guarded with \cs{@ifundefined} so loading \pkg{cvd} without
-% \pkg{pgf} or \pkg{tikz} is a no-op. \texttt{ShadingType 1} (functional)
-% shadings and \texttt{DeviceGray} shadings are intentionally not handled.
+% Patch pgf's leaf tuple emitters so the RGB or CMYK tuple is filtered through
+% \texttt{cvd.transform} first. From one transform each emitter sets both the
+% space-separated macro (\cs{pgf@rgb}/\cs{pgf@cmyk}) that ends up in
+% \texttt{/C0} and \texttt{/C1} for the pdf/luatex driver, and the
+% brace-grouped system-layer record (\cs{pgf@sys@rgb}/\cs{pgf@sys@cmyk}) used
+% by the dvisvgm driver, so the two never disagree. Guarded with
+% \cs{@ifundefined} so loading \pkg{cvd} without \pkg{pgf} or \pkg{tikz} is a
+% no-op. \texttt{ShadingType 1} (functional) shadings and \texttt{DeviceGray}
+% shadings are intentionally not handled.
 %
 %    \begin{macrocode}
 \def \__cvd_patch_pgf_shadings:
@@ -92,23 +96,13 @@
     \@ifundefined { pgf@getrgb@@ } { } {
       \def \pgf@getrgb@@ ##1,##2,##3!
         {
-          \directlua
-            {
-              token.set_macro("pgf@rgb",~
-                cvd.transform_pgf_rgb("##1",~"##2",~"##3"))
-            }
-          \def \pgf@sys@rgb { {##1}{##2}{##3} }
+          \directlua { cvd.set_pgf_rgb("##1",~"##2",~"##3") }
         }
     }
     \@ifundefined { pgf@getcmyk@@ } { } {
       \def \pgf@getcmyk@@ ##1,##2,##3,##4!
         {
-          \directlua
-            {
-              token.set_macro("pgf@cmyk",~
-                cvd.transform_pgf_cmyk("##1",~"##2",~"##3",~"##4"))
-            }
-          \def \pgf@sys@cmyk { {##1}{##2}{##3}{##4} }
+          \directlua { cvd.set_pgf_cmyk("##1",~"##2",~"##3",~"##4") }
         }
     }
   }

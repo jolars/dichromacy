@@ -32,6 +32,19 @@
   \TYPE{rgb:~\pgf@rgb}
 }
 
+% The system-layer record (\pgf@sys@rgb, brace-grouped) is used by the dvisvgm
+% driver and must stay in sync with \pgf@rgb. Verify it is transformed too.
+\TEST{pgf~sys@rgb~record~transformed~under~deuteranopia}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgf@getrgbtuplewithmixin{1}{0}{0}
+  \TYPE{sys~rgb:~\pgf@sys@rgb}
+  \pgf@getcmyktuplewithmixin{0}{1}{0}{0.5}
+  \TYPE{sys~cmyk:~\pgf@sys@cmyk}
+  \cvddisable
+}
+
 % The tests above exercise the patched leaf emitters in isolation. The tests
 % below drive pgf's full shading-construction path: \pgf@parsefunc is what the
 % LuaTeX driver (\pgfsys@horishading/@vertshading/@radialshading) calls to build

@@ -344,6 +344,33 @@ function M.transform_pgf_cmyk(c, m, y, k)
 	return string.format("%.6f %.6f %.6f %s", nc, nm, ny, k)
 end
 
+-- Wrap a space-separated tuple ("a b c") in the brace-grouped form pgf uses
+-- for its system-layer colour records ("{a}{b}{c}").
+local function brace_tuple(tuple)
+	return "{" .. tuple:gsub(" ", "}{") .. "}"
+end
+
+-- Set both pgf macros for an RGB shading tuple from a single transform, so
+-- they can never disagree:
+--   \pgf@rgb     (space-separated) feeds the PDF /Function arrays /C0 /C1
+--                consumed by the pdf/luatex driver.
+--   \pgf@sys@rgb (brace-grouped) feeds the system-layer colour records
+--                (\pgf@sys@shading@start@rgb etc.) consumed by the dvisvgm
+--                driver. The luatex PDF driver ignores these, but keeping
+--                them transformed avoids an inconsistency under dvilualatex.
+function M.set_pgf_rgb(r, g, b)
+	local tuple = M.transform_pgf_rgb(r, g, b)
+	token.set_macro("pgf@rgb", tuple)
+	token.set_macro("pgf@sys@rgb", brace_tuple(tuple))
+end
+
+-- CMYK counterpart of set_pgf_rgb, setting \pgf@cmyk and \pgf@sys@cmyk.
+function M.set_pgf_cmyk(c, m, y, k)
+	local tuple = M.transform_pgf_cmyk(c, m, y, k)
+	token.set_macro("pgf@cmyk", tuple)
+	token.set_macro("pgf@sys@cmyk", brace_tuple(tuple))
+end
+
 -- Transform RGB color operators in PDF page content streams
 -- NOTE: This function modifies the uncompressed PDF stream content. Due to limitations
 -- in LuaTeX's process_pdf_image_content callback, the stream length may not always be
