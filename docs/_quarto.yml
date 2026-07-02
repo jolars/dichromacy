@@ -8,7 +8,7 @@ citation-style: authoryear
 book:
   title: "cvd"
   subtitle: "A LaTeX Package for Simulating Color Vision Deficiency"
-  description: |
+  description: >
     A LaTeX package for simulating color vision deficiency
 
   output-file: cvd
