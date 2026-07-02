@@ -23,6 +23,7 @@ let
       xurl
       tagpdf
       colorblind
+      cleveref
       microtype
       koma-script
       booktabs
