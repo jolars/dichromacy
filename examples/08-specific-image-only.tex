@@ -1,0 +1,16 @@
+%! TEX program = lualatex
+\documentclass{article}
+\usepackage[protanopia, graphics convert=false]{cvd}
+% CVD simulation is disabled globally
+
+\begin{document}
+
+% This image is NOT transformed
+% Replace with your actual image file
+\includegraphics[width=0.5\textwidth]{example-image.png}
+
+% This specific image IS transformed using \cvdincludegraphics
+% Replace with your actual image file
+\cvdincludegraphics[width=0.5\textwidth]{example-image.png}
+
+\end{document}

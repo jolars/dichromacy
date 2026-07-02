@@ -1,0 +1,17 @@
+%! TEX program = lualatex
+\documentclass{article}
+\usepackage{pgfplots}
+\usepackage[deuteranopia]{cvd}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[xlabel=X, ylabel=Y]
+  \addplot[red, mark=*] coordinates {(0,0) (1,1) (2,2)};
+  \addplot[green, mark=square*] coordinates {(0,1) (1,0) (2,1)};
+  \addplot[blue, mark=triangle*] coordinates {(0,2) (1,1) (2,0)};
+\end{axis}
+\end{tikzpicture}
+
+\end{document}

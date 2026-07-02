@@ -2,6 +2,9 @@ project:
   type: book
   output-dir: _site
 
+bibliography: references.bib
+citation-style: authoryear
+
 book:
   title: "cvd"
   subtitle: "A LaTeX Package for Simulating Color Vision Deficiency"
@@ -19,6 +22,7 @@ book:
   image: images/og.jpg
   author:
     - name: "Johan Larsson"
+    - name: "Simon Pfahler"
   date: today
 
   repo-url: "https://github.com/jolars/cvd"
@@ -28,7 +32,7 @@ book:
   search: true
 
   page-footer:
-    left: "cvd v{{< meta version >}} | Copyright 2026, Johan Larsson"
+    left: "cvd v{{< meta version >}} | Copyright 2026, Johan Larsson, Simon Pfahler"
     right:
       - icon: github
         href: "https://github.com/jolars/cvd"
@@ -38,13 +42,23 @@ book:
     - part: User Guide
       chapters:
         - getting-started.md
+        - usage.md
+        - commands.md
+        - images.md
+        - examples.md
         - shadings.md
+        - limitations.md
+    - part: Background
+      chapters:
+        - theory.md
   appendices:
     - part: Implementation
       chapters:
         - implementation/cvd.md
 
 highlight-style: breeze
+
+lang: en-US
 
 format:
   html:
@@ -58,6 +72,7 @@ format:
     include-in-header:
       file: header.html
   pdf:
+    pdf-standard: [a-4f, ua-2]
     documentclass: scrreprt
     classoption: toc=graduated
     toc: true
@@ -65,6 +80,10 @@ format:
     colorlinks: true
     include-in-header:
       text: |
+        % KOMA-Script's captions=tableheading runs the caption counter on
+        % longtables even when captionless; Pandoc emits those as
+        % \def\LTcaptype{none}, so define a 'none' counter to step into.
+        \newcounter{none}
         \usepackage{xspace}
         \usepackage{parskip}
         \usepackage{doc}

@@ -1,0 +1,13 @@
+%! TEX program = lualatex
+% Compile with: lualatex --shell-escape 07-transform-photo.tex
+\documentclass{article}
+\usepackage[graphics convert=true]{cvd}
+\cvdtype{protanopia}
+
+\begin{document}
+
+% Requires --shell-escape and ImageMagick
+% Replace with your actual image file
+\includegraphics[width=\textwidth]{example-image.jpg}
+
+\end{document}

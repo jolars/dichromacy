@@ -1,0 +1,58 @@
+%! TEX program = luatex
+\documentclass{article}
+\usepackage{graphicx}
+
+\usepackage[deuteranopia]{cvd}
+
+\cvdtype{deuteranopia}
+\cvdseverity{0.9}
+
+\begin{document}
+
+\section{CVD Simulation Test}
+
+This document tests the color vision deficiency simulation.
+
+\subsection{Basic Colors}
+
+\textcolor{red}{Red text} and \textcolor{green}{green text} and \textcolor{blue}{blue text}.
+
+\textcolor{orange}{Orange}, \textcolor{purple}{purple}, \textcolor{cyan}{cyan}.
+
+\subsection{Color Boxes}
+
+\fcolorbox{black}{red}{\color{white} Red Box}
+\fcolorbox{black}{green}{\color{white} Green Box}
+\fcolorbox{black}{blue}{\color{white} Blue Box}
+
+\subsection{Custom RGB Colors}
+
+\definecolor{myred}{rgb}{0.8, 0.1, 0.1}
+\definecolor{mygreen}{rgb}{0.1, 0.8, 0.1}
+\definecolor{myblue}{rgb}{0.1, 0.1, 0.8}
+
+\textcolor{myred}{Custom red}, \textcolor{mygreen}{custom green}, \textcolor{myblue}{custom blue}.
+
+\subsection{Severity Test}
+
+Normal text in black.
+
+\cvdseverity{0.5}
+\textcolor{red}{Red at 50\% severity} and \textcolor{green}{green at 50\% severity}.
+
+\cvdseverity{1.0}
+\textcolor{red}{Red at 100\% severity} and \textcolor{green}{green at 100\% severity}.
+
+\subsection{Disable/Enable}
+
+\cvddisable
+CVD disabled - \textcolor{red}{normal red} and \textcolor{green}{normal green}.
+
+\cvdenable
+CVD enabled - \textcolor{red}{simulated red} and \textcolor{green}{simulated green}.
+
+\cvdseverity{1.0}
+\cvdtype{protanopia}
+\cvdincludegraphics[width=6cm]{../images/logo}
+
+\end{document}

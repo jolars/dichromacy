@@ -1,4 +1,4 @@
-# Shadings (gradients)
+# Shadings (gradients) {#sec-shadings}
 
 `cvd` transforms TikZ/pgf shadings---both axial (linear) and radial gradients
 emitted by `\shade`, `\shadedraw`, and friends. The transformation is applied to

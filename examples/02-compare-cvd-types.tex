@@ -1,0 +1,28 @@
+%! TEX program = lualatex
+\documentclass{article}
+\usepackage{cvd}
+\usepackage{xcolor}
+
+\begin{document}
+
+\section{Normal Vision}
+\cvddisable
+\textcolor{red}{Red} \textcolor{green}{Green} \textcolor{blue}{Blue}
+
+\section{Protanopia (Red-blind)}
+\cvdenable
+\cvdtype{protanopia}
+\cvdseverity{1.0}
+\textcolor{red}{Red} \textcolor{green}{Green} \textcolor{blue}{Blue}
+
+\section{Deuteranopia (Green-blind)}
+\cvdtype{deuteranopia}
+\cvdseverity{1.0}
+\textcolor{red}{Red} \textcolor{green}{Green} \textcolor{blue}{Blue}
+
+\section{Tritanopia (Blue-blind)}
+\cvdtype{tritanopia}
+\cvdseverity{1.0}
+\textcolor{red}{Red} \textcolor{green}{Green} \textcolor{blue}{Blue}
+
+\end{document}

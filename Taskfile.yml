@@ -29,7 +29,6 @@ tasks:
     desc: Build the PDF manual
     deps:
       - extract-dtx-docs
-      - generate-example-images
     cmds:
       - cd docs && quarto render --to pdf
 

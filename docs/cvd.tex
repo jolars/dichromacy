@@ -1,19 +1,30 @@
+\DocumentMetadata{lang = en-us}
 \documentclass{ltxdoc}
 
-\usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage[hyphens]{url}
-\usepackage[colorlinks=true,hidelinks,pdfa]{hyperref}
 \usepackage{minted}
 \usepackage{xcolor}
-\usepackage{siunitx}
+\usepackage{colorblind}
+\usepackage[colorlinks=true,hidelinks]{hyperref}
+\usepackage{cleveref}
+
+\def\cvdversion{0.1.0}
+
+\hypersetup{
+    pdftitle={The cvd package (v\cvdversion)},
+    pdfauthor={Johan Larsson, Simon Pfahler},
+}
+
+\let\origDescribeMacro\DescribeMacro
+\renewcommand{\DescribeMacro}[1]{\noindent\origDescribeMacro{#1}}
 
 \newcommand{\DescribeOption}[4]{
   \DescribeMacro{#1}
   \begin{minipage}[t]{\textwidth}
-    \textit{\textbf{\textcolor{mLightGreen}{#2}}}\dotfill\,#3\par
+    \textit{\textbf{\textcolor{green}{#2}}}\dotfill\,#3\par
     \begingroup
     \vspace{0.5em}#4\par
     \endgroup
@@ -31,10 +42,8 @@
 
 \newmintinline{latex}{fontsize=\normalsize}
 
-\def\cvdversion{0.1.0}
-
 \title{The cvd package (v\cvdversion)}
-\author{Johan Larsson}
+\author{Johan Larsson, Simon Pfahler}
 \date{\today}
 
 \begin{document}
@@ -43,6 +52,167 @@
 \tableofcontents
 
 \section{Introduction}
+In colorblind-safe documents, the contents are presented so that the same information is conveyed to readers regardless of a potential color vision deficiency.
+By simulating color vision deficiencies (CVDs), this package provides the tools to check for colorblind-safeness without the need to consult a person affected by it.
+
+\subsection{For the Impatient}
+To check your document for deuteranopia (the most common form of color blindness), simply load the package like this:
+\begin{verbatim}
+	\usepackage[deuteranopia]{cvd}
+\end{verbatim}
+All colors in your document will then be transformed to appear as they would to someone with deuteranopia.
+
+\subsection{Overview}
+This package simulates various types of color vision deficiency (CVD) in \LaTeX\ documents, allowing authors to check whether their color choices are accessible to readers with various kinds and severities of CVDs.
+By transforming all colors according to CVD models, you can verify that information conveyed through color remains distinguishable even for colorblind readers.
+
+CVD simulation is useful for scientific papers with color-coded data, educational materials, presentations, maps, charts, and any document where color plays a role in conveying information.
+
+\Cref{fig:example} shows a test image in its original colors alongside three CVD types at different severities.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image_normal.png}\\
+		normal vision
+	\end{minipage}\hfill
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-protanopia-1.0.png}\\
+		protanopia, severity 1
+	\end{minipage}\\[0.5em]
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-deuteranopia-0.5.png}\\
+		deuteranopia, severity 0.5
+	\end{minipage}\hfill
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-tritanopia-0.8.png}\\
+		tritanopia, severity=0.8
+	\end{minipage}
+	\caption{Example of the effect of different color vision deficiencies for a test image.}
+	\label{fig:example}
+\end{figure}
+
+\section{Usage}
+
+\subsection{Package Options}\label{sec:options}
+The behavior of the CVD simulation can be set in the package options.
+These options apply to the entire document or until they are changed later using the commands from \cref{sec:commands}.
+
+\DescribeOption{type}{protanopia, deuteranopia, tritanopia}{(none specified)}
+{
+	Sets the type of color-vision deficiency.
+}
+
+\DescribeOption{severity}{\meta{dimension}}{(none specified)}
+{
+	Sets the severity level of the simulation, on a scale from 0 to 1.
+	\texttt{1} means maximum severity (i.e.\ full colorblindness of a given type), while \texttt{0} means completely normal vision.
+}
+
+\DescribeOption{graphics hook}{\meta{boolean}}{true}
+{
+	Enable or disable the simulation for included PDF images.
+}
+
+\DescribeOption{graphics convert}{\meta{boolean}}{false}
+{
+	Enable or disable ImageMagick conversion for raster images (PNG/JPG).
+}
+
+\DescribeOption{protanopia}{\meta{flag}}{(not specified)}
+{
+	Preset for protanopia (red-blind).
+	This is equivalent to providing \texttt{type=protanopia} and \texttt{severity=1.0}.
+}
+
+\DescribeOption{deuteranopia}{\meta{flag}}{(not specified)}
+{
+	Preset for deuteranopia (green-blind).
+	This is equivalent to providing \texttt{type=deuteranopia} and \texttt{severity=1.0}.
+}
+
+\DescribeOption{tritanopia}{\meta{flag}}{(not specified)}
+{
+	Preset for tritanopia (blue-blind).
+	This is equivalent to providing \texttt{type=tritanopia} and \texttt{severity=1.0}.
+}
+
+\DescribeOption{protanomaly}{\meta{flag}}{(not specified)}
+{
+	Preset for protanomaly (red-weak).
+	This is equivalent to providing \texttt{type=protanopia} and \texttt{severity=0.5}.
+}
+
+\DescribeOption{deuteranomaly}{\meta{flag}}{(not specified)}
+{
+	Preset for deuteranomaly (green-weak).
+	This is equivalent to providing \texttt{type=deuteranopia} and \texttt{severity=0.5}.
+}
+
+\DescribeOption{tritanomaly}{\meta{flag}}{(not specified)}
+{
+	Preset for tritanomaly (blue-weak).
+	This is equivalent to providing \texttt{type=tritanopia} and \texttt{severity=0.5}.
+}
+
+\subsection{Commands}\label{sec:commands}
+At any point in the document, the behavior of the CVD simulation can be changed using the following commands.
+There are some technical limitations to this, see \cref{sec:limitations}.
+
+\DescribeMacro{\cvdtype\{\meta{type}\}}
+Set the type of color-vision deficiency.
+Possible options are \texttt{protanopia}, \texttt{deuteranopia} and \texttt{tritanopia}.
+
+\DescribeMacro{\cvdseverity\{\meta{dimension}\}}
+Set the severity level on a scale from 0 to 1.
+\texttt{1} means maximum severity (i.e.\ full colorblindness of a given type), while \texttt{0} means completely normal vision.
+
+\DescribeMacro{\cvdenable}
+Enable color vision deficiency simulation.
+
+\DescribeMacro{\cvddisable}
+Disable color vision deficiency simulation.
+Note that the type and severity are stored in the background, so a subsequent \verb|\cvdenable| restores the original CVD simulation behavior.
+
+\DescribeMacro{\cvdincludegraphics[...]\\\{\meta{path}\}}
+Include a raster image (PNG/JPG) with CVD transformation applied.
+This macro is mostly for internal use, as \verb|\cvdincludegraphics| and \verb|\includegraphics| behave identical when CVD simulation is enabled.
+However, when CVD simulation is disabled, this macro can be used to apply the CVD transformation to a single raster image.
+Note that this macro has no effect for PDF images, these are transformed according to the current state of the CVD simulation.
+
+\DescribeMacro{\cvddefinecolor[\meta{options}]\\\{\meta{source color}\}\\\{\meta{target color}\}}
+Define a new color named \meta{target color} by applying the current CVD transformation to the existing color \meta{source color}.
+The optional \meta{options} argument can be used to override the current CVD settings (e.g., \texttt{type}, \texttt{severity}) for this specific color definition, with the same syntax as \verb|\cvdset|.
+For example, \verb|\cvddefinecolor[protanopia,severity=0.5]{blue}{blue-cvd}| defines a color \texttt{blue-cvd} that appears as \texttt{blue} would to someone with protanopia of severity $50\%$.
+
+\DescribeMacro{\cvdset\{\meta{options}\}}
+Set one or more CVD options at once using key-value syntax.
+All options available at package load time can be used here, for a list see \cref{sec:options}.
+
+\section{Current Limitations}\label{sec:limitations}
+
+\subsection{Engine Requirements}
+Only Lua\TeX\ is currently supported.
+Support for other engines is under development.
+
+\subsection{Raster Image Requirements}
+Raster image (PNG/JPG) transformation requires compiling with \texttt{--shell-escape} and ImageMagick to be installed on the system.
+Without these, raster images pass through untransformed.
+
+\subsection{PDF/Vector Graphics Limitations}
+\begin{description}
+	\item[Functional shadings] (\verb|\pgfdeclarefunctionalshading|, ShadingType~1) pass through unchanged as their colors are embedded in PostScript Type~4 functions.
+	\item[Cached duplicate shadings] pgf caches shadings, so changing CVD settings between identical \verb|\shade| calls has no effect.
+	      Workaround: use \verb|\cvddefinecolor| to create unique color names for each CVD variant.
+	\item[scn/SCN color operators] Spot/separation colors, ICCBased colors, and pattern colors are not transformed. Only device-color operators \texttt{rg/RG} (RGB) and \texttt{k/K} (CMYK) are supported.
+	\item[PDF stream length] When transforming PDF content streams, significant growth may cause truncation or rendering issues in some PDF viewers.
+	      Mitigation: use raster formats for complex PDFs, or split into multiple documents.
+	      When a significant growth of the PDF stream is detected, a warning for this is issued.
+\end{description}
 
 \section{Implementation}
 

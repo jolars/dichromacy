@@ -1,0 +1,14 @@
+%! TEX program = lualatex
+\documentclass{article}
+\usepackage{tikz}
+\usepackage[deuteranopia]{cvd}
+
+\begin{document}
+
+\begin{tikzpicture}
+  % This gradient will be transformed with deuteranopia
+  \shade[left color=red, right color=blue] (0,0) rectangle (6,2);
+  \node at (3,1) {Deuteranopia Gradient};
+\end{tikzpicture}
+
+\end{document}
