@@ -22,6 +22,7 @@ let
       standalone
       xurl
       tagpdf
+      colorblind
       microtype
       koma-script
       booktabs
