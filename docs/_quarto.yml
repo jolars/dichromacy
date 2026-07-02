@@ -82,7 +82,11 @@ format:
         % KOMA-Script's captions=tableheading runs the caption counter on
         % longtables even when captionless; Pandoc emits those as
         % \def\LTcaptype{none}, so define a 'none' counter to step into.
-        \newcounter{none}
+        % TeX Live 2026's PDF-tagging code (activated via pdf-standard)
+        % predefines \c@none, so guard against a duplicate definition.
+        \makeatletter
+        \@ifundefined{c@none}{\newcounter{none}}{}
+        \makeatother
         \usepackage{xspace}
         \usepackage{parskip}
         \usepackage{doc}
