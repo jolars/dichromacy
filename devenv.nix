@@ -21,6 +21,7 @@ let
       setspace
       standalone
       xurl
+      tagpdf
       microtype
       koma-script
       booktabs
