@@ -22,7 +22,7 @@ packtdszip = false
 
 uploadconfig = {
 	pkg = "cvd",
-	version = "0.1.0",
+	version = "0.2.0",
 	author = "Johan Larsson, Simon Pfahler",
 	uploader = "Johan Larsson",
 	license = "mit",
