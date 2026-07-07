@@ -20,3 +20,7 @@
 - don't expand args for includegraphics ([`8fec26b`](https://github.com/jolars/cvd/commit/8fec26b319fa3cf7308d17393affe4f179f32e81))
 - correctly wrap args ([`364e6c9`](https://github.com/jolars/cvd/commit/364e6c9145482435d116b3fa4a144d554585cf29))
 - fix package options in expl3 ([`e0f7fee`](https://github.com/jolars/cvd/commit/e0f7feeea627e53f5bdc87a7302a386ee2c8042d))
+
+## 0.1.0
+
+First initial release of the package.
