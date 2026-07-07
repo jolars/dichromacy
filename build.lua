@@ -26,8 +26,11 @@ uploadconfig = {
 	author = "Johan Larsson, Simon Pfahler",
 	uploader = "Johan Larsson",
 	license = "mit",
-	summary = "CVD correction",
-	description = "Simulate and correct for color vision deficiencies in images.",
+	summary = "Color vision deficiency simulation for LaTeX documents",
+	description = "Simulate color vision deficiencies in LaTeX documents, including "
+		.. "protanopia, deuteranopia, and tritanopia. This package provides "
+		.. "a few simple commands that allow you to control both the type "
+		.. "of color deficiency and the severity of the simulation.",
 	ctanPath = "/macros/latex/contrib/cvd",
 	repository = "https://github.com/jolars/cvd",
 	bugtracker = "https://github.com/jolars/cvd/issues",
