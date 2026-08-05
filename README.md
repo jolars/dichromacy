@@ -1,6 +1,6 @@
-# dichromacy <a href="https://jolars.github.io/dichromacy"><img src="https://github.com/jolars/dichromacy/raw/main/images/logo.png" align="right" width="140" /></a>
+# Dichromacy <a href="https://jolars.github.io/dichromacy"><img src="https://github.com/jolars/dichromacy/raw/main/images/logo.png" align="right" width="140" /></a>
 
-dichromacy is a LaTeX package for simulating color vision deficiency.
+Dichromacy is a LaTeX package for simulating color vision deficiency.
 
 ## Installation
 
@@ -16,7 +16,7 @@ l3build install
 
 ## Usage
 
-dichromacy requires LuaTeX to work and currently supports
+Dichromacy requires LuaTeX to work and currently supports
 
 - any colors defined with `\textcolor`, `\colorbox`, `\fcolorbox`, etc.
 - PDF images included with `\includegraphics`
@@ -99,8 +99,8 @@ CVD enabled - \textcolor{red}{simulated red} and \textcolor{green}{simulated gre
 
 Contributions are welcome!
 
-Also, when writing commit messages, please use the
-[conventional commits format](https://www.conventionalcommits.org/en/v1.0.0/).
+Also, when writing commit messages, please use the [conventional commits
+format](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ## Versioning
 
