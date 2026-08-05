@@ -2,7 +2,15 @@ This is the first release of dichromacy on CTAN. It is a package
 for simulating color vision deficiency (CVD) in
 LaTeX documents.
 
-A full changelog follows:
+A full changelog up til now follows:
+
+## [0.3.0](https://github.com/jolars/dichromacy/compare/v0.2.0...v0.3.0) (2026-08-05)
+
+### Breaking changes
+- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
+
+### Features
+- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
 
 ## [0.2.0](https://github.com/jolars/cvd/compare/v0.1.0...v0.2.0) (2026-07-02)
 
@@ -24,3 +32,7 @@ A full changelog follows:
 - don't expand args for includegraphics ([`8fec26b`](https://github.com/jolars/cvd/commit/8fec26b319fa3cf7308d17393affe4f179f32e81))
 - correctly wrap args ([`364e6c9`](https://github.com/jolars/cvd/commit/364e6c9145482435d116b3fa4a144d554585cf29))
 - fix package options in expl3 ([`e0f7fee`](https://github.com/jolars/cvd/commit/e0f7feeea627e53f5bdc87a7302a386ee2c8042d))
+
+## 0.1.0
+
+First initial release of the package.
