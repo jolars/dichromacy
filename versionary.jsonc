@@ -4,5 +4,18 @@
   "release-type": "latex",
   "version-file": "build.lua",
   "changelog-file": "CHANGELOG.md",
-  "release-branch": "versionary/release"
+  "release-branch": "versionary/release",
+  "packages": {
+    ".": {
+      // The latex release type already syncs build.lua and src/*.dtx. The
+      // manual's title macro is not covered by it, so keep it in sync here.
+      "extra-files": [
+        {
+          "type": "regex",
+          "path": "docs/dichromacy.tex",
+          "pattern": "\\\\def\\\\cvdversion\\{([^}]+)\\}"
+        }
+      ]
+    }
+  }
 }
