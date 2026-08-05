@@ -1,18 +1,18 @@
 \input{regression-test.tex}
 \documentclass{minimal}
 \usepackage{xcolor}
-\usepackage{cvd}
+\usepackage{dichromacy}
 
 \START
 
 \TEST{transform_current_color~with~fill~and~stroke}{
   \directlua{
-    cvd.set_type('deuteranopia')
-    cvd.set_severity(1.0)
-    cvd.enable()
+    dichromacy.set_type('deuteranopia')
+    dichromacy.set_severity(1.0)
+    dichromacy.enable()
 
     local input = "1 0 0 rg 0 1 0 RG"
-    local output = cvd.transform_current_color(input)
+    local output = dichromacy.transform_current_color(input)
     token.set_macro("cvdcolorinput", input)
     token.set_macro("cvdcoloroutput", output)
   }
@@ -24,14 +24,14 @@
 
 \TEST{process_pdf_image_content~rgb~and~cmyk~black}{
   \directlua{
-    cvd.set_type('deuteranopia')
-    cvd.set_severity(1.0)
-    cvd.enable()
+    dichromacy.set_type('deuteranopia')
+    dichromacy.set_severity(1.0)
+    dichromacy.enable()
 
     local stream_rgb_black = "\string\n0 0 0 rg \string\n"
     local stream_cmyk_black = "\string\n0 0 0 1 k \string\n"
-    token.set_macro("cvdrgbblack", cvd.process_pdf_image_content(stream_rgb_black))
-    token.set_macro("cvdcmykblack", cvd.process_pdf_image_content(stream_cmyk_black))
+    token.set_macro("cvdrgbblack", dichromacy.process_pdf_image_content(stream_rgb_black))
+    token.set_macro("cvdcmykblack", dichromacy.process_pdf_image_content(stream_cmyk_black))
   }
 
   \TYPE{RGB~black:~\cvdrgbblack}
@@ -41,14 +41,14 @@
 
 \TEST{process_pdf_image_content~stream~start~and~stroke}{
   \directlua{
-    cvd.set_type('protanopia')
-    cvd.set_severity(1.0)
-    cvd.enable()
+    dichromacy.set_type('protanopia')
+    dichromacy.set_severity(1.0)
+    dichromacy.enable()
 
     local stream_start = "1 0 0 rg \string\n"
     local stream_stroke = "\string\n0 1 0 RG \string\n"
-    token.set_macro("cvdstreamstart", cvd.process_pdf_image_content(stream_start))
-    token.set_macro("cvdstreamstroke", cvd.process_pdf_image_content(stream_stroke))
+    token.set_macro("cvdstreamstart", dichromacy.process_pdf_image_content(stream_start))
+    token.set_macro("cvdstreamstroke", dichromacy.process_pdf_image_content(stream_stroke))
   }
 
   \TYPE{Stream~start:~\cvdstreamstart}

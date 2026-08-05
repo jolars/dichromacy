@@ -1,7 +1,7 @@
 #!/bin/bash
-# cvd-transform-image.sh
+# dichromacy-transform-image.sh
 # Transform images for color vision deficiency simulation
-# Usage: cvd-transform-image.sh <type> <severity> <input> <output>
+# Usage: dichromacy-transform-image.sh <type> <severity> <input> <output>
 
 set -e
 
@@ -14,7 +14,7 @@ if [ -z "$INPUT" ] || [ -z "$OUTPUT" ] || [ -z "$CVD_TYPE" ] || [ -z "$SEVERITY"
     echo "Usage: $0 <type> <severity> <input> <output>"
     echo "  type: protanopia, deuteranopia, or tritanopia"
     echo "  severity: 0.0 to 1.0 (1.0 = full simulation)"
-    echo "Example: $0 protanopia 1.0 photo.png photo-cvd.png"
+    echo "Example: $0 protanopia 1.0 photo.png photo-dichromacy.png"
     exit 1
 fi
 
@@ -29,13 +29,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Compute interpolated Machado matrix using texlua
 # Create a temporary Lua script
-TEMP_LUA=$(mktemp /tmp/cvd-matrix.XXXXXX.lua)
+TEMP_LUA=$(mktemp /tmp/dichromacy-matrix.XXXXXX.lua)
 trap "rm -f $TEMP_LUA" EXIT
 
 cat > "$TEMP_LUA" << EOF
 package.path = package.path .. ";$SCRIPT_DIR/src/?.lua"
-local cvd = require('cvd')
-local matrix_str = cvd.get_machado_matrix_for_imagemagick('$CVD_TYPE', $SEVERITY)
+local dichromacy = require('dichromacy')
+local matrix_str = dichromacy.get_machado_matrix_for_imagemagick('$CVD_TYPE', $SEVERITY)
 if matrix_str then
     print(matrix_str)
 else

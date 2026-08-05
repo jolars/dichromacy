@@ -4,7 +4,7 @@
 -- each independently derivable: transforming a basis vector e_j returns the
 -- (clamped) j-th column of the Machado matrix at that severity grid point, so
 -- the expected numbers below are read straight off the matrix tables in
--- src/cvd.lua rather than produced by the code under test.
+-- src/dichromacy.lua rather than produced by the code under test.
 local support = dofile("tests/lua/support.lua")
 
 local types = { "protanopia", "deuteranopia", "tritanopia" }
@@ -15,8 +15,8 @@ local function fmt(v)
 end
 
 local function transformed(opts, model, v)
-	return support.with_cvd(opts, function(cvd)
-		return { cvd.transform(model, v[1], v[2], v[3]) }
+	return support.with_dichromacy(opts, function(dichromacy)
+		return { dichromacy.transform(model, v[1], v[2], v[3]) }
 	end)
 end
 

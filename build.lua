@@ -1,7 +1,7 @@
 #!/usr/bin/env texlua
 
 ---@diagnostic disable: lowercase-global
-module = "cvd"
+module = "dichromacy"
 
 sourcefiledir = "src"
 sourcefiles = { "*.dtx", "*.ins", "*.lua" }
@@ -13,7 +13,7 @@ unpacksuppfiles = { "*.lua" }
 
 docfiledir = "docs"
 typesetfiles = { "*.tex" }
-docfiles = { "cvd.pdf" }
+docfiles = { "dichromacy.pdf" }
 textfiles = { "*.md", "LICENSE" }
 checkengines = { "luatex" }
 checksuppfiles = { "*.tex" }
@@ -21,7 +21,7 @@ checksuppfiles = { "*.tex" }
 packtdszip = false
 
 uploadconfig = {
-	pkg = "cvd",
+	pkg = "dichromacy",
 	version = "0.2.0",
 	author = "Johan Larsson, Simon Pfahler",
 	uploader = "Johan Larsson",
@@ -33,9 +33,9 @@ uploadconfig = {
 		.. "protanopia, deuteranopia, and tritanopia. This package provides "
 		.. "a few simple commands that allow you to control both the type "
 		.. "of color deficiency and the severity of the simulation.",
-	ctanPath = "/macros/latex/contrib/cvd",
-	repository = "https://github.com/jolars/cvd",
-	bugtracker = "https://github.com/jolars/cvd/issues",
+	ctanPath = "/macros/latex/contrib/dichromacy",
+	repository = "https://github.com/jolars/dichromacy",
+	bugtracker = "https://github.com/jolars/dichromacy/issues",
 	topic = { "colour", "accessible", "luatex" },
 	announcement_file = "ctan_announcement.txt",
 }

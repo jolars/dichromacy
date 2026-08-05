@@ -147,7 +147,7 @@ return {{CodeBlock = CodeBlock}}
 
 	-- List of DTX files to process with display names
 	local dtx_files = {
-		{ name = "cvd", title = "Main" },
+		{ name = "dichromacy", title = "Main" },
 	}
 
 	print("Extracting and converting DTX documentation...\n")
@@ -177,7 +177,7 @@ return {{CodeBlock = CodeBlock}}
 				outfile:write(
 					"**Source file:** [`src/"
 						.. basename
-						.. ".dtx`](https://github.com/jolars/cvd/blob/main/src/"
+						.. ".dtx`](https://github.com/jolars/dichromacy/blob/main/src/"
 						.. basename
 						.. ".dtx)\n\n"
 				)

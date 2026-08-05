@@ -1,7 +1,7 @@
 -- Exercises process_pdf_image_content beyond the RGB cases in parsing.lua:
 -- CMYK operators, the out-of-gamut guard, fill+stroke and mixed-model streams,
 -- format_short trailing-zero stripping, and the graphics-hook gate. Expected
--- outputs were confirmed against the implementation in src/cvd.lua.
+-- outputs were confirmed against the implementation in src/dichromacy.lua.
 local support = dofile("tests/lua/support.lua")
 
 -- All cases use deuteranopia at full severity. Each declares one expectation:
@@ -78,15 +78,15 @@ for _, case in ipairs(cases) do
 	tests[#tests + 1] = {
 		name = case.name,
 		run = function()
-			local cvd = support.load_cvd()
-			cvd.set_type("deuteranopia")
-			cvd.set_severity(1.0)
-			cvd.enable()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
 			if case.disable_hook then
-				cvd.disable_graphics_hook()
+				dichromacy.disable_graphics_hook()
 			end
 
-			local out = cvd.process_pdf_image_content(case.input)
+			local out = dichromacy.process_pdf_image_content(case.input)
 
 			if case.expect then
 				support.assert_equal(out, case.expect, "unexpected transformed stream")

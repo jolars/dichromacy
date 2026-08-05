@@ -1,4 +1,4 @@
--- cvd.lua
+-- dichromacy.lua
 -- Color Vision Deficiency simulation for LuaLaTeX
 
 local M = {}
@@ -316,11 +316,11 @@ end
 -- Transform an RGB tuple emitted by pgf for shading /C0 /C1 arrays.
 -- Inputs are the three component strings as passed to \pgf@getrgb@@.
 -- Returns a space-separated PDF tuple suitable for embedding in a Function
--- dictionary. When cvd is disabled, the original strings are returned
+-- dictionary. When dichromacy is disabled, the original strings are returned
 -- unchanged.
 function M.transform_pgf_rgb(r, g, b)
 	local nr, ng, nb = tonumber(r), tonumber(g), tonumber(b)
-	-- Pass the original strings through unchanged when cvd is disabled or
+	-- Pass the original strings through unchanged when dichromacy is disabled or
 	-- when a component is not a parseable number (rather than silently
 	-- coercing it to 0, which would emit a wrong color).
 	if not (M.enabled and M.current_type) or not (nr and ng and nb) then
@@ -334,7 +334,7 @@ end
 -- The K component is preserved unchanged, matching transform_current_color.
 function M.transform_pgf_cmyk(c, m, y, k)
 	local nc, nm, ny = tonumber(c), tonumber(m), tonumber(y)
-	-- Pass the original strings through unchanged when cvd is disabled or
+	-- Pass the original strings through unchanged when dichromacy is disabled or
 	-- when a component is not a parseable number. The K component is left
 	-- as-is regardless, matching transform_current_color.
 	if not (M.enabled and M.current_type) or not (nc and nm and ny) then
@@ -497,7 +497,7 @@ function M.install_pdf_image_hook()
 	pdf.setrecompress(1)
 
 	-- Register the callback using luatexbase for LaTeX compatibility
-	luatexbase.add_to_callback("process_pdf_image_content", M.process_pdf_image_content, "cvd_pdf_transform")
+	luatexbase.add_to_callback("process_pdf_image_content", M.process_pdf_image_content, "dichromacy_pdf_transform")
 end
 
 -- Check if ImageMagick is available
@@ -636,7 +636,7 @@ function M.get_image_path(img_path)
 	local base_dir = output_dir or "."
 
 	-- Create cache directory if it doesn't exist
-	local cache_dir = base_dir .. "/.cvd-cache"
+	local cache_dir = base_dir .. "/.dichromacy-cache"
 	local cache_stat = lfs.attributes(cache_dir)
 	if not cache_stat then
 		-- Create output_dir first if it doesn't exist
@@ -650,7 +650,15 @@ function M.get_image_path(img_path)
 	local base = img_path:match("([^/\\]+)$") or img_path -- extract just the filename
 	local name_only = base:match("(.+)%.[^.]+$") or base -- remove extension
 	local severity_str = string.format("%.1f", M.current_severity)
-	local transformed = cache_dir .. "/" .. name_only .. "-cvd-" .. M.current_type .. "-" .. severity_str .. "." .. ext
+	local transformed = cache_dir
+		.. "/"
+		.. name_only
+		.. "-dichromacy-"
+		.. M.current_type
+		.. "-"
+		.. severity_str
+		.. "."
+		.. ext
 
 	-- Check if we need to transform (file doesn't exist or is older)
 	local need_transform = true

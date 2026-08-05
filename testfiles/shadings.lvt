@@ -2,7 +2,7 @@
 \documentclass{minimal}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usepackage{cvd}
+\usepackage{dichromacy}
 
 \START
 

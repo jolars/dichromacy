@@ -14,7 +14,7 @@
 \def\cvdversion{0.1.0}
 
 \hypersetup{
-    pdftitle={The cvd package (v\cvdversion)},
+    pdftitle={The dichromacy package (v\cvdversion)},
     pdfauthor={Johan Larsson, Simon Pfahler},
 }
 
@@ -42,7 +42,7 @@
 
 \newmintinline{latex}{fontsize=\normalsize}
 
-\title{The cvd package (v\cvdversion)}
+\title{The dichromacy package (v\cvdversion)}
 \author{Johan Larsson, Simon Pfahler}
 \date{\today}
 
@@ -58,7 +58,7 @@ By simulating color vision deficiencies (CVDs), this package provides the tools 
 \subsection{For the Impatient}
 To check your document for deuteranopia (the most common form of color blindness), simply load the package like this:
 \begin{verbatim}
-	\usepackage[deuteranopia]{cvd}
+	\usepackage[deuteranopia]{dichromacy}
 \end{verbatim}
 All colors in your document will then be transformed to appear as they would to someone with deuteranopia.
 
@@ -79,17 +79,17 @@ CVD simulation is useful for scientific papers with color-coded data, educationa
 	\end{minipage}\hfill
 	\begin{minipage}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-protanopia-1.0.png}\\
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-dichromacy-protanopia-1.0.png}\\
 		protanopia, severity 1
 	\end{minipage}\\[0.5em]
 	\begin{minipage}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-deuteranopia-0.5.png}\\
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-dichromacy-deuteranopia-0.5.png}\\
 		deuteranopia, severity 0.5
 	\end{minipage}\hfill
 	\begin{minipage}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-cvd-tritanopia-0.8.png}\\
+		\includegraphics[width=0.8\textwidth]{../../docs/images/test_image-dichromacy-tritanopia-0.8.png}\\
 		tritanopia, severity=0.8
 	\end{minipage}
 	\caption{Example of the effect of different color vision deficiencies for a test image.}
@@ -216,6 +216,6 @@ Without these, raster images pass through untransformed.
 
 \section{Implementation}
 
-\DocInput{cvd.dtx}
+\DocInput{dichromacy.dtx}
 
 \end{document}

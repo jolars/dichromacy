@@ -1,6 +1,6 @@
 # Examples
 
-This page provides practical examples demonstrating various use cases for the `cvd` package.
+This page provides practical examples demonstrating various use cases for the `dichromacy` package.
 
 ## Basic Usage
 
@@ -10,7 +10,7 @@ The simplest way to check your document for the most common form of color blindn
 
 ```latex
 \documentclass{article}
-\usepackage[deuteranopia]{cvd}
+\usepackage[deuteranopia]{dichromacy}
 \usepackage{xcolor}
 
 \begin{document}
@@ -28,7 +28,7 @@ Create a comparison document showing how colors appear with different CVD types:
 
 ```latex
 \documentclass{article}
-\usepackage{cvd}
+\usepackage{dichromacy}
 \usepackage{xcolor}
 
 \begin{document}
@@ -65,7 +65,7 @@ When presenting color-coded data, check that your color scheme is accessible:
 ```latex
 \documentclass{article}
 \usepackage{pgfplots}
-\usepackage[deuteranopia]{cvd}
+\usepackage[deuteranopia]{dichromacy}
 \pgfplotsset{compat=1.18}
 
 \begin{document}
@@ -88,7 +88,7 @@ If the colors become hard to distinguish, consider changing them until they can 
 ```latex
 \documentclass{article}
 \usepackage{pgfplots}
-\usepackage{cvd}
+\usepackage{dichromacy}
 \pgfplotsset{compat=1.18}
 
 \begin{document}
@@ -126,7 +126,7 @@ If the colors become hard to distinguish, consider changing them until they can 
 ```latex
 \documentclass{article}
 \usepackage{tikz}
-\usepackage[deuteranomaly]{cvd}
+\usepackage[deuteranomaly]{dichromacy}
 
 \begin{document}
 
@@ -151,7 +151,7 @@ If the colors become hard to distinguish, consider changing them until they can 
 ```latex
 \documentclass{article}
 \usepackage{tikz}
-\usepackage[deuteranopia]{cvd}
+\usepackage[deuteranopia]{dichromacy}
 
 \begin{document}
 
@@ -174,7 +174,7 @@ See @sec-shadings for detailed examples on handling shadings with different CVD 
 
 ```latex
 \documentclass{article}
-\usepackage[graphics convert=true]{cvd}
+\usepackage[graphics convert=true]{dichromacy}
 \cvdtype{protanopia}
 
 \begin{document}
@@ -194,7 +194,7 @@ lualatex --shell-escape mydocument.tex
 
 ```latex
 \documentclass{article}
-\usepackage[protanopia, graphics convert=false]{cvd}
+\usepackage[protanopia, graphics convert=false]{dichromacy}
 % CVD simulation is disabled globally
 
 \begin{document}

@@ -1,6 +1,6 @@
 # Commands {#sec-commands}
 
-The `cvd` package provides several commands to control the CVD simulation at any point in your document. These commands allow you to enable, disable, and configure the simulation dynamically.
+The `dichromacy` package provides several commands to control the CVD simulation at any point in your document. These commands allow you to enable, disable, and configure the simulation dynamically.
 
 ## Simulation Control
 
@@ -121,7 +121,7 @@ Example with multiple CVD variants:
 ```latex
 \documentclass{article}
 \usepackage{xcolor}
-\usepackage{cvd}
+\usepackage{dichromacy}
 
 \begin{document}
 

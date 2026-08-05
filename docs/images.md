@@ -1,6 +1,6 @@
 # Images and Graphics
 
-The `cvd` package handles both vector (PDF) and raster (PNG/JPG) images, transforming colors according to the configured CVD simulation. The transformation behavior depends on the image type and the package options.
+The `dichromacy` package handles both vector (PDF) and raster (PNG/JPG) images, transforming colors according to the configured CVD simulation. The transformation behavior depends on the image type and the package options.
 
 ## Image Types
 
@@ -17,7 +17,7 @@ PDF images are transformed automatically when the `graphics hook` option is enab
 
 Example:
 ```latex
-\usepackage[graphics hook=true]{cvd}
+\usepackage[graphics hook=true]{dichromacy}
 \cvdtype{deuteranopia}
 
 \begin{document}
@@ -38,7 +38,7 @@ When these requirements are met, raster images are converted on-the-fly with the
 
 Example:
 ```latex
-\usepackage[graphics convert=true]{cvd}
+\usepackage[graphics convert=true]{dichromacy}
 \cvdtype{protanopia}
 
 \begin{document}
@@ -112,7 +112,7 @@ When transforming PDF content streams, significant growth may cause truncation o
 
 2. **Enable both options for full coverage:**
    ```latex
-   \usepackage[graphics hook=true, graphics convert=true]{cvd}
+   \usepackage[graphics hook=true, graphics convert=true]{dichromacy}
    ```
 
 3. **Always compile with --shell-escape** when using raster images:

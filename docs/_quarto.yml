@@ -5,14 +5,14 @@ project:
 bibliography: references.bib
 
 book:
-  title: "cvd"
+  title: "dichromacy"
   subtitle: "A LaTeX Package for Simulating Color Vision Deficiency"
   description: >
     A LaTeX package for simulating color vision deficiency
 
-  output-file: cvd
+  output-file: dichromacy
   open-graph:
-    title: "cvd - A LaTeX Package for Simulating Color Vision Deficiency"
+    title: "dichromacy - A LaTeX Package for Simulating Color Vision Deficiency"
     locale: en_US
     image: images/og.jpg
   twitter-card:
@@ -24,17 +24,17 @@ book:
     - name: "Simon Pfahler"
   date: today
 
-  repo-url: "https://github.com/jolars/cvd"
-  site-url: "https://jolars.github.io/cvd/"
+  repo-url: "https://github.com/jolars/dichromacy"
+  site-url: "https://jolars.github.io/dichromacy/"
   repo-branch: main
 
   search: true
 
   page-footer:
-    left: "cvd v{{< meta version >}} | Copyright 2026, Johan Larsson, Simon Pfahler"
+    left: "dichromacy v{{< meta version >}} | Copyright 2026, Johan Larsson, Simon Pfahler"
     right:
       - icon: github
-        href: "https://github.com/jolars/cvd"
+        href: "https://github.com/jolars/dichromacy"
         aria-label: "Source for this webpage"
   chapters:
     - index.md
@@ -53,7 +53,7 @@ book:
   appendices:
     - part: Implementation
       chapters:
-        - implementation/cvd.md
+        - implementation/dichromacy.md
 
 highlight-style: breeze
 

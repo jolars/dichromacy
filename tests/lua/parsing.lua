@@ -34,8 +34,8 @@ local stream_cases = {
 }
 
 local tests = support.make_case_tests(stream_cases, function(case)
-	support.with_cvd({ type = case.type, severity = case.severity }, function(cvd)
-		local output = cvd.process_pdf_image_content(case.input)
+	support.with_dichromacy({ type = case.type, severity = case.severity }, function(dichromacy)
+		local output = dichromacy.process_pdf_image_content(case.input)
 
 		if case.expect_unchanged then
 			support.assert_unchanged(case.input, output)

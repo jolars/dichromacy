@@ -1,6 +1,6 @@
 # Current Limitations
 
-While the `cvd` package provides powerful CVD simulation capabilities, there are some technical limitations to be aware of. This page documents all known limitations and their workarounds.
+While the `dichromacy` package provides powerful CVD simulation capabilities, there are some technical limitations to be aware of. This page documents all known limitations and their workarounds.
 
 ## Engine Requirements
 
@@ -23,7 +23,7 @@ Raster image (PNG/JPG) transformation requires compiling with `-shell-escape` an
 
 If you encounter limitations that affect your use case, consider:
 
-1. Checking the [GitHub repository](https://github.com/jolars/cvd) for open issues
+1. Checking the [GitHub repository](https://github.com/jolars/dichromacy) for open issues
 2. Opening a new issue with a minimal working example
 3. Contributing a pull request with improvements
 

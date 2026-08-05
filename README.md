@@ -1,22 +1,22 @@
-# cvd <a href="https://jolars.github.io/cvd"><img src="https://github.com/jolars/cvd/raw/main/images/logo.png" align="right" width="140" /></a>
+# dichromacy <a href="https://jolars.github.io/dichromacy"><img src="https://github.com/jolars/dichromacy/raw/main/images/logo.png" align="right" width="140" /></a>
 
-cvd is a LaTeX package for simulating color vision deficiency.
+dichromacy is a LaTeX package for simulating color vision deficiency.
 
 ## Installation
 
 The package is not yet on CTAN, so you need to install it from source. Assuming
 you have [l3build](https://https://github.com/latex3/l3build) installed as well
-as an up-to-date LaTeX distribution, you can install cvd by running:
+as an up-to-date LaTeX distribution, you can install dichromacy by running:
 
 ```bash
-git clone https://github.com/jolars/cvd.git
-cd cvd
+git clone https://github.com/jolars/dichromacy.git
+cd dichromacy
 l3build install
 ```
 
 ## Usage
 
-cvd requires LuaTeX to work and currently supports
+dichromacy requires LuaTeX to work and currently supports
 
 - any colors defined with `\textcolor`, `\colorbox`, `\fcolorbox`, etc.
 - PDF images included with `\includegraphics`
@@ -33,7 +33,7 @@ compiling LuaTeX with the `--shell-escape` flag enabled.
 \documentclass{article}
 \usepackage{graphicx}
 
-\usepackage{cvd}
+\usepackage{dichromacy}
 
 \cvdtype{deuteranopia}
 \cvdseverity{0.9}

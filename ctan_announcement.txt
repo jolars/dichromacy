@@ -1,4 +1,4 @@
-This is the first release of cvd on CTAN. It is a package
+This is the first release of dichromacy on CTAN. It is a package
 for simulating color vision deficiency (CVD) in
 LaTeX documents.
 

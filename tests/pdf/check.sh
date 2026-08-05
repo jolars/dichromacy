@@ -12,10 +12,10 @@ set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 root=$(cd "$here/../.." && pwd)
 
-sty="$root/build/unpacked/cvd.sty"
-lua="$root/build/unpacked/cvd.lua"
+sty="$root/build/unpacked/dichromacy.sty"
+lua="$root/build/unpacked/dichromacy.lua"
 if [[ ! -f $sty || ! -f $lua ]]; then
-	echo "error: build/unpacked/cvd.{sty,lua} missing; run 'l3build unpack' first" >&2
+	echo "error: build/unpacked/dichromacy.{sty,lua} missing; run 'l3build unpack' first" >&2
 	exit 1
 fi
 

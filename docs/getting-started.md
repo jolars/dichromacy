@@ -1,13 +1,13 @@
 # Getting Started
 
-The `cvd` package helps you create colorblind-safe LaTeX documents by simulating various types of color vision deficiency (CVD). This allows you to check whether your color choices are accessible to readers with different kinds and severities of CVDs without needing to consult someone affected by color blindness.
+The `dichromacy` package helps you create colorblind-safe LaTeX documents by simulating various types of color vision deficiency (CVD). This allows you to check whether your color choices are accessible to readers with different kinds and severities of CVDs without needing to consult someone affected by color blindness.
 
 ## Quick Start
 
 To quickly check your document for deuteranopia (the most common form of color blindness), simply load the package like this:
 
 ```latex
-\usepackage[deuteranopia]{cvd}
+\usepackage[deuteranopia]{dichromacy}
 ```
 
 All colors in your document will then be transformed to appear as they would to someone with deuteranopia.
@@ -41,14 +41,14 @@ The package provides several preset options for common CVD types:
 Example usage:
 
 ```latex
-\usepackage[protanopia]{cvd}      % Red-blind simulation
-\usepackage[tritanomaly]{cvd}     % Blue-weak simulation
+\usepackage[protanopia]{dichromacy}      % Red-blind simulation
+\usepackage[tritanomaly]{dichromacy}     % Blue-weak simulation
 ```
 
 You can also customize the severity (0 to 1, where 1 is maximum):
 
 ```latex
-\usepackage[type=deuteranopia, severity=0.5]{cvd}
+\usepackage[type=deuteranopia, severity=0.5]{dichromacy}
 ```
 
 and even set change the type and severity halfway through your document:

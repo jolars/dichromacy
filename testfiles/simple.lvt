@@ -1,6 +1,6 @@
 \input{regression-test.tex}
 \documentclass{minimal}
-\usepackage{cvd}
+\usepackage{dichromacy}
 
 \ExplSyntaxOn
 \START

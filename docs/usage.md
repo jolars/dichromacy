@@ -37,7 +37,7 @@ For more control, you can specify the type and severity explicitly:
 
 ```latex
 % Most common use case: check for deuteranopia
-\usepackage[deuteranopia]{cvd}
+\usepackage[deuteranopia]{dichromacy}
 
 % Full customization
 \usepackage[
@@ -45,7 +45,7 @@ For more control, you can specify the type and severity explicitly:
   severity=0.7,
   graphics hook=true,
   graphics convert=true
-]{cvd}
+]{dichromacy}
 ```
 
 ## Option Interaction

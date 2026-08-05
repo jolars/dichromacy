@@ -4,7 +4,7 @@ local M = {}
 -- install_tex_stubs, so tests can observe macros set by e.g. set_pgf_rgb.
 M.set_macros = {}
 
--- Install the minimal TeX/LuaTeX globals cvd.lua expects when loaded outside a
+-- Install the minimal TeX/LuaTeX globals dichromacy.lua expects when loaded outside a
 -- real LuaTeX run. `opts.status` fields are merged over the defaults, letting a
 -- test flip e.g. shell_escape or output_directory without affecting others.
 function M.install_tex_stubs(opts)
@@ -47,9 +47,9 @@ function M.install_tex_stubs(opts)
 	}
 end
 
-function M.load_cvd(opts)
+function M.load_dichromacy(opts)
 	M.install_tex_stubs(opts)
-	return dofile("src/cvd.lua")
+	return dofile("src/dichromacy.lua")
 end
 
 function M.assert_equal(actual, expected, message)
@@ -98,24 +98,24 @@ function M.assert_changed(input, output, message)
 	M.assert_not_equal(output, input, message or "value should be changed")
 end
 
-function M.with_cvd(options, callback)
-	local cvd = M.load_cvd()
+function M.with_dichromacy(options, callback)
+	local dichromacy = M.load_dichromacy()
 
 	if options.type then
-		cvd.set_type(options.type)
+		dichromacy.set_type(options.type)
 	end
 
 	if options.severity ~= nil then
-		cvd.set_severity(options.severity)
+		dichromacy.set_severity(options.severity)
 	end
 
 	if options.enabled == false then
-		cvd.disable()
+		dichromacy.disable()
 	else
-		cvd.enable()
+		dichromacy.enable()
 	end
 
-	return callback(cvd)
+	return callback(dichromacy)
 end
 
 function M.make_case_tests(cases, runner)

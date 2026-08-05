@@ -302,7 +302,7 @@ TSWLatexianTemp*
 
 # Ignore sty files generated from dtx
 *.sty
-docs/cvd.pdf
+docs/dichromacy.pdf
 build/
 .latex-cache
 *-ctan.zip
@@ -461,7 +461,7 @@ dist
 .task/
 
 examples/*.pdf
-.cvd-cache
+.dichromacy-cache
 docs/_site
 
 # Devenv

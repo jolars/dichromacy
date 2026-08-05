@@ -1,6 +1,6 @@
 # Theory: Color Vision Deficiency Simulation
 
-This page explains the mathematical foundation behind how the `cvd` package simulates color vision deficiencies. Understanding this theory helps you appreciate how the transformations work and why they produce realistic simulations of color blindness. This is based on [@Machado_2009].
+This page explains the mathematical foundation behind how the `dichromacy` package simulates color vision deficiencies. Understanding this theory helps you appreciate how the transformations work and why they produce realistic simulations of color blindness. This is based on [@Machado_2009].
 
 ## Overview
 
