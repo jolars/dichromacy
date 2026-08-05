@@ -5,7 +5,6 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage[hyphens]{url}
-\usepackage{minted}
 \usepackage{xcolor}
 \usepackage{colorblind}
 \usepackage[colorlinks=true,hidelinks]{hyperref}
@@ -30,17 +29,6 @@
     \endgroup
   \end{minipage}
 }
-
-\setminted{
-  style=xcode,
-  linenos,
-  numbersep=4pt,
-  escapeinside=||,
-  framesep=6pt,
-  fontsize=\small,
-}
-
-\newmintinline{latex}{fontsize=\normalsize}
 
 \title{The dichromacy package (v\cvdversion)}
 \author{Johan Larsson, Simon Pfahler}
