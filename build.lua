@@ -36,6 +36,6 @@ uploadconfig = {
 	ctanPath = "/macros/latex/contrib/cvd",
 	repository = "https://github.com/jolars/cvd",
 	bugtracker = "https://github.com/jolars/cvd/issues",
-	topic = "colour,typesetting",
+	topic = { "colour", "accessible", "luatex" },
 	announcement_file = "ctan_announcement.txt",
 }
