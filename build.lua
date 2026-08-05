@@ -22,7 +22,7 @@ packtdszip = false
 
 uploadconfig = {
 	pkg = "dichromacy",
-	version = "0.2.0",
+	version = "0.3.0",
 	author = "Johan Larsson, Simon Pfahler",
 	uploader = "Johan Larsson",
 	email = "johanlarsson@outlook.com",

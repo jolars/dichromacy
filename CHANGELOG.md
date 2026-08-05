@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/jolars/dichromacy/compare/v0.2.0...v0.3.0) (2026-08-05)
+
+### Breaking changes
+- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
+
+### Features
+- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
+
 ## [0.2.0](https://github.com/jolars/cvd/compare/v0.1.0...v0.2.0) (2026-07-02)
 
 ### Features
