@@ -5,8 +5,8 @@ Dichromacy is a LaTeX package for simulating color vision deficiency.
 ## Installation
 
 The package is not yet on CTAN, so you need to install it from source. Assuming
-you have [l3build](https://https://github.com/latex3/l3build) installed as well
-as an up-to-date LaTeX distribution, you can install dichromacy by running:
+you have [l3build](https://github.com/latex3/l3build) installed as well as an
+up-to-date LaTeX distribution, you can install dichromacy by running:
 
 ```bash
 git clone https://github.com/jolars/dichromacy.git
