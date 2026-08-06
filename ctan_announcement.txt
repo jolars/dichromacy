@@ -1,38 +1,18 @@
-This is the first release of dichromacy on CTAN. It is a package
-for simulating color vision deficiency (CVD) in
-LaTeX documents.
+This is the first release of dichromacy on CTAN. It is a package for simulating
+color vision deficiency (CVD) in LaTeX documents. It is currently limited to
+LuaTeX.
 
-A full changelog up til now follows:
+Except for loading the package, all the user has to do is to set the type of
+CVD via `\cvdtype{}` and the severity with `\cvdseverity{}`, for instance:
 
-## [0.3.0](https://github.com/jolars/dichromacy/compare/v0.2.0...v0.3.0) (2026-08-05)
+    \usepackage{dichromacy}
 
-### Breaking changes
-- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
+    \cvdtype{deuteranopia}
+    \cvdseverity{0.5}
 
-### Features
-- rename package to dichromacy ([`80623f1`](https://github.com/jolars/dichromacy/commit/80623f1c9c5ba279a5183ef1acb1af7c186f7c37))
+The package will then automatically adjust the colors in the document to
+simulate the specified type and severity of CVD. This can be useful for testing
+the accessibility of documents for individuals with color vision deficiencies.
 
-## [0.2.0](https://github.com/jolars/cvd/compare/v0.1.0...v0.2.0) (2026-07-02)
-
-### Features
-- apply CVD transforms on shadings (#19) ([`8cf300d`](https://github.com/jolars/cvd/commit/8cf300d9fc4078525b127b7ce37903ba7f80a060))
-- more robust color conversion (#13) ([`c0f3b0c`](https://github.com/jolars/cvd/commit/c0f3b0c965bcf58201ac6e6e50211ae186b0609e))
-- Add cmy conversion and update rgb conversion (#6) ([`99ddb00`](https://github.com/jolars/cvd/commit/99ddb00f7c869a1178225c2df890cdb7e6bdbc4e))
-- add `\cvdset` wrapper and toggles for hooks and raster ([`abbb167`](https://github.com/jolars/cvd/commit/abbb16712f636ddeb588cc5dea911e387595ffd4))
-- add `\cvddefinecolor` ([`a7732f8`](https://github.com/jolars/cvd/commit/a7732f85654e02d29a07e232c527f4ea109c59a6))
-- use only the machado algorithm ([`1af48b0`](https://github.com/jolars/cvd/commit/1af48b06d8badfae6b1aa4b532060485c7632dd3))
-- add support for includegraphics ([`e7c338a`](https://github.com/jolars/cvd/commit/e7c338a4f0bc64441c090fec019a01f8df41a812))
-- make cvd simulation work for included pdfs ([`437146d`](https://github.com/jolars/cvd/commit/437146df5aef254c11888c48cb572a3ad0d88ed5))
-- initial commit ([`e228bb7`](https://github.com/jolars/cvd/commit/e228bb74c6aecc39c3d3bb9e82ff04e90aff0b80))
-
-### Bug Fixes
-- Remove infinite recursion in definition of cvdincludegraphics (#20) ([`d50a8b4`](https://github.com/jolars/cvd/commit/d50a8b453c905483ec5a1579638405b68904eda4))
-- transform stroke colors in embedded PDF images ([`410fbd6`](https://github.com/jolars/cvd/commit/410fbd6e869701383b4a9ea8a68ae2c1065907f8))
-- don't return nil for malformed matches ([`e17527c`](https://github.com/jolars/cvd/commit/e17527c0630a571bdf00b4775989e39f4da3b9b6))
-- don't expand args for includegraphics ([`8fec26b`](https://github.com/jolars/cvd/commit/8fec26b319fa3cf7308d17393affe4f179f32e81))
-- correctly wrap args ([`364e6c9`](https://github.com/jolars/cvd/commit/364e6c9145482435d116b3fa4a144d554585cf29))
-- fix package options in expl3 ([`e0f7fee`](https://github.com/jolars/cvd/commit/e0f7feeea627e53f5bdc87a7302a386ee2c8042d))
-
-## 0.1.0
-
-First initial release of the package.
+Currently the package supports colors defined via the standard LaTeX color
+commands (e.g., `\color{red}`) as well as PDF images included via `\includegraphics`.
