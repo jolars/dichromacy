@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1](https://github.com/jolars/dichromacy/compare/v0.3.0...v0.3.1) (2026-08-06)
+
+### Bug Fixes
+- **docs:** use correct license note in source file ([`2ee1543`](https://github.com/jolars/dichromacy/commit/2ee154375335e513b2030c497bdec47484c7ca07))
+
 ## [0.3.0](https://github.com/jolars/dichromacy/compare/v0.2.0...v0.3.0) (2026-08-05)
 
 ### Breaking changes
