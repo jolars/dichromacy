@@ -105,3 +105,7 @@ format](https://www.conventionalcommits.org/en/v1.0.0/).
 ## Versioning
 
 The project uses [semantic versioning](https://semver.org).
+
+## License
+
+MIT, please see [LICENSE](LICENSE) for details.
