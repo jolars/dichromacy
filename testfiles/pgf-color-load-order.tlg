@@ -1,0 +1,9 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: patched~when~pgf~loads~after~dichromacy
+============================================================
+literal:~0.265135 0.420471 0.000000 rg
+literal:~0.253141 0.000000 1.000000 RG
+============================================================
+(pgf-color-load-order.aux)

@@ -313,41 +313,58 @@ function M.transform_current_color(color_str)
 	return transformed
 end
 
+-- Transform a three-component color tuple handed to us by pgf, returning the
+-- components as a list of formatted strings.
+--
+-- A component that is not a parseable number is passed through untouched
+-- rather than coerced to 0, which would emit a wrong color. The same goes for
+-- every component when dichromacy is disabled, so pgf's own number formatting
+-- survives rather than being reformatted to six decimals.
+local function pgf_triple(model, a, b, c)
+	local na, nb, nc = tonumber(a), tonumber(b), tonumber(c)
+	if not (M.enabled and M.current_type) or not (na and nb and nc) then
+		return { a, b, c }
+	end
+	na, nb, nc = M.transform(model, na, nb, nc)
+	return {
+		string.format("%.6f", na),
+		string.format("%.6f", nb),
+		string.format("%.6f", nc),
+	}
+end
+
+-- CMYK counterpart of pgf_triple. Only C, M and Y are transformed; K is
+-- carried through untouched, matching transform_current_color.
+local function pgf_cmyk(c, m, y, k)
+	local components = pgf_triple("cmy", c, m, y)
+	components[4] = k
+	return components
+end
+
+-- The two shapes pgf wants its color tuples in: space-separated ("a b c") for
+-- PDF /Function arrays, brace-grouped ("{a}{b}{c}") for the system-layer
+-- records and for handing arguments back to a system-layer command.
+local function space_tuple(components)
+	return table.concat(components, " ")
+end
+
+local function brace_tuple(components)
+	return "{" .. table.concat(components, "}{") .. "}"
+end
+
 -- Transform an RGB tuple emitted by pgf for shading /C0 /C1 arrays.
 -- Inputs are the three component strings as passed to \pgf@getrgb@@.
 -- Returns a space-separated PDF tuple suitable for embedding in a Function
 -- dictionary. When dichromacy is disabled, the original strings are returned
 -- unchanged.
 function M.transform_pgf_rgb(r, g, b)
-	local nr, ng, nb = tonumber(r), tonumber(g), tonumber(b)
-	-- Pass the original strings through unchanged when dichromacy is disabled or
-	-- when a component is not a parseable number (rather than silently
-	-- coercing it to 0, which would emit a wrong color).
-	if not (M.enabled and M.current_type) or not (nr and ng and nb) then
-		return string.format("%s %s %s", r, g, b)
-	end
-	nr, ng, nb = M.transform("rgb", nr, ng, nb)
-	return string.format("%.6f %.6f %.6f", nr, ng, nb)
+	return space_tuple(pgf_triple("rgb", r, g, b))
 end
 
 -- Transform a CMYK tuple emitted by pgf for shading /C0 /C1 arrays.
 -- The K component is preserved unchanged, matching transform_current_color.
 function M.transform_pgf_cmyk(c, m, y, k)
-	local nc, nm, ny = tonumber(c), tonumber(m), tonumber(y)
-	-- Pass the original strings through unchanged when dichromacy is disabled or
-	-- when a component is not a parseable number. The K component is left
-	-- as-is regardless, matching transform_current_color.
-	if not (M.enabled and M.current_type) or not (nc and nm and ny) then
-		return string.format("%s %s %s %s", c, m, y, k)
-	end
-	nc, nm, ny = M.transform("cmy", nc, nm, ny)
-	return string.format("%.6f %.6f %.6f %s", nc, nm, ny, k)
-end
-
--- Wrap a space-separated tuple ("a b c") in the brace-grouped form pgf uses
--- for its system-layer colour records ("{a}{b}{c}").
-local function brace_tuple(tuple)
-	return "{" .. tuple:gsub(" ", "}{") .. "}"
+	return space_tuple(pgf_cmyk(c, m, y, k))
 end
 
 -- Set both pgf macros for an RGB shading tuple from a single transform, so
@@ -359,16 +376,36 @@ end
 --                driver. The luatex PDF driver ignores these, but keeping
 --                them transformed avoids an inconsistency under dvilualatex.
 function M.set_pgf_rgb(r, g, b)
-	local tuple = M.transform_pgf_rgb(r, g, b)
-	token.set_macro("pgf@rgb", tuple)
-	token.set_macro("pgf@sys@rgb", brace_tuple(tuple))
+	local components = pgf_triple("rgb", r, g, b)
+	token.set_macro("pgf@rgb", space_tuple(components))
+	token.set_macro("pgf@sys@rgb", brace_tuple(components))
 end
 
 -- CMYK counterpart of set_pgf_rgb, setting \pgf@cmyk and \pgf@sys@cmyk.
 function M.set_pgf_cmyk(c, m, y, k)
-	local tuple = M.transform_pgf_cmyk(c, m, y, k)
-	token.set_macro("pgf@cmyk", tuple)
-	token.set_macro("pgf@sys@cmyk", brace_tuple(tuple))
+	local components = pgf_cmyk(c, m, y, k)
+	token.set_macro("pgf@cmyk", space_tuple(components))
+	token.set_macro("pgf@sys@cmyk", brace_tuple(components))
+end
+
+-- Transform a tuple passed to one of pgf's system-layer colour commands
+-- (\pgfsys@color@rgb@fill and friends) and return it brace-grouped, ready to
+-- be handed straight back to the original command. These are driver-agnostic:
+-- only the numbers change, so whichever backend pgf is using still emits the
+-- colour its own way.
+--
+-- There is no gray counterpart: the simulations map the achromatic axis to
+-- itself, so \pgfsys@color@gray@fill and @stroke need no transform.
+function M.pgf_rgb_args(r, g, b)
+	return brace_tuple(pgf_triple("rgb", r, g, b))
+end
+
+function M.pgf_cmyk_args(c, m, y, k)
+	return brace_tuple(pgf_cmyk(c, m, y, k))
+end
+
+function M.pgf_cmy_args(c, m, y)
+	return brace_tuple(pgf_triple("cmy", c, m, y))
 end
 
 -- Transform RGB color operators in PDF page content streams

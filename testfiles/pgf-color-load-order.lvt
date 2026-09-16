@@ -1,0 +1,37 @@
+\input{regression-test.tex}
+\documentclass{minimal}
+\usepackage{dichromacy}
+\usepackage{tikz}
+
+% Same wrappers as pgf-color.lvt, but with dichromacy loaded before tikz. The
+% system-layer commands do not exist yet when dichromacy runs its patch at load
+% time, so this exercises the \AtBeginDocument branch instead. That branch only
+% fires inside the document body, hence the \begin{document} the other test
+% files do without, and hence \START coming after it: everything begin-document
+% logs on its way past would otherwise land in the expected output.
+\begin{document}
+
+\START
+
+\makeatletter
+
+\let\SAVEDLITERAL\pgfsysprotocol@literal
+\def\pgfsysprotocol@literal#1{\TYPE{literal:~#1}}
+
+% Only the one branch differs, so one colour each way is enough to show it
+% fired: a system-layer command called directly, and one reached through
+% \pgfsetstrokecolor.
+\TEST{patched~when~pgf~loads~after~dichromacy}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@rgb@fill{1}{0}{0}
+  \pgfsetstrokecolor{blue}
+  \cvddisable
+}
+
+\let\pgfsysprotocol@literal\SAVEDLITERAL
+
+\makeatother
+
+\end{document}

@@ -1,0 +1,118 @@
+\input{regression-test.tex}
+\documentclass{minimal}
+\usepackage{tikz}
+\usepackage{dichromacy}
+
+\START
+
+\makeatletter
+
+% Colours set through pgf's own interface never reach xcolor's \XC@display.
+% Capture what the wrapped system-layer commands hand to the driver by
+% intercepting the literal emitter itself. See issue #27.
+\let\SAVEDLITERAL\pgfsysprotocol@literal
+\def\pgfsysprotocol@literal#1{\TYPE{literal:~#1}}
+
+\TEST{rgb~fill~and~stroke~transformed}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@rgb@fill{1}{0}{0}
+  \pgfsys@color@rgb@stroke{0}{0}{1}
+  \cvddisable
+}
+
+% \pgfsys@color@rgb sets both at once and is defined in terms of the two
+% leaves, so it must come out transformed without a patch of its own.
+\TEST{composite~rgb~command~transformed}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@rgb{1}{0}{0}
+  \cvddisable
+}
+
+% Only C, M and Y are transformed; K is carried through untouched.
+\TEST{cmyk~transformed~preserving~K}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@cmyk@fill{0}{1}{0}{0.5}
+  \pgfsys@color@cmy@fill{0}{1}{0}
+  \cvddisable
+}
+
+% The simulations map the achromatic axis to itself, so the gray commands are
+% deliberately left unpatched and must pass through byte for byte.
+\TEST{gray~untouched}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@gray@fill{0.5}
+  \pgfsys@color@gray@stroke{0.5}
+  \cvddisable
+}
+
+% When disabled the original argument strings must survive verbatim, keeping
+% pgf's own number formatting rather than being reformatted to six decimals.
+\TEST{disabled~passes~through~verbatim}{
+  \cvddisable
+  \pgfsys@color@rgb@fill{1}{0}{0}
+  \pgfsys@color@cmyk@stroke{0}{1}{0}{0.5}
+}
+
+% A component that is not a parseable number is passed on untouched rather
+% than being coerced to 0, which would emit a wrong colour.
+\TEST{unparseable~component~passed~through}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsys@color@rgb@fill{x}{0}{0}
+  \cvddisable
+}
+
+% The commands from issue #27, one level up from the system layer. These reach
+% the leaves through \colorlet and \pgf@uncomma rather than being called with
+% literal numbers, so they guard the whole path, not just the wrappers.
+\TEST{pgfset~colour~commands~transformed}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \pgfsetfillcolor{red}
+  \pgfsetstrokecolor{blue}
+  \pgfsetcolor{green}
+  \cvddisable
+}
+
+% TikZ's fill and draw options are \pgfsetfillcolor and \pgfsetstrokecolor, so
+% they go through the system layer too, and a change to that wiring would show
+% up here rather than in the test above. The path is left empty and the picture
+% is boxed away: the options are applied either way, nothing is painted, and
+% the expected log neither depends on how pgf formats coordinates nor trips
+% over typesetting outside a document body. The scope literals around the two
+% colours are pgf's own and are reported unfiltered.
+\TEST{tikz~fill~and~draw~options~transformed}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \setbox0=\hbox{\tikz \path[fill=red,draw=blue];}
+  \cvddisable
+}
+
+% A colour reaching both the xcolor hook and the system layer must still be
+% transformed exactly once. TikZ's color option does exactly that: it sets the
+% current colour through \colorlet and then calls \pgfsetcolor{.}.
+\TEST{colour~on~both~paths~transformed~once}{
+  \cvdtype{deuteranopia}
+  \cvdseverity{1.0}
+  \cvdenable
+  \colorlet{.}{red}
+  \pgfsetcolor{.}
+  \cvddisable
+}
+
+\let\pgfsysprotocol@literal\SAVEDLITERAL
+
+\makeatother
+
+\END

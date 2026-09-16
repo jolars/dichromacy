@@ -148,6 +148,115 @@
 \AtBeginDocument { \__dichromacy_patch_pgf_shadings: }
 %    \end{macrocode}
 %
+% \subsection{Hook into pgf Colors}
+%
+% Colors set through pgf's own interface (\cs{pgfsetfillcolor},
+% \cs{pgfsetstrokecolor}, \cs{pgfsetcolor}) never reach \texttt{xcolor}'s
+% \cs{XC@display}, so the \cs{XC@mcolor} hook above never sees them. They go
+% straight to the system layer and are emitted verbatim. TikZ's \texttt{fill}
+% and \texttt{draw} path options go this way too, being defined as
+% \cs{pgfsetfillcolor} and \cs{pgfsetstrokecolor}, and \pkg{beamer} draws its
+% navigation symbols this way. The bare color shorthand
+% \texttt{\textbackslash fill[red]} is the exception: it sets the current color
+% through \cs{colorlet} and so does reach \texttt{xcolor}.
+%
+% Wrap the six chromatic system-layer entry points so their arguments are
+% filtered through \texttt{dichromacy.transform} before the original command
+% runs. Wrapping rather than redefining keeps this driver-agnostic: only the
+% numbers change, and whichever backend \pkg{pgf} selected still emits the
+% color its own way. The composite commands (\cs{pgfsys@color@rgb} and
+% friends) need no patch of their own, being defined in terms of these leaves.
+%
+% A color that travels both routes, such as TikZ's \texttt{color} option, is
+% still transformed only once. \texttt{xcolor} keeps the untransformed model
+% and specification in \cs{color@.} and the hook above rewrites only
+% \cs{current@color}, so what \pkg{pgf} later extracts through \cs{colorlet} is
+% the true color, not a simulated one.
+%
+% The gray commands are deliberately left alone: the simulations map the
+% achromatic axis to itself, so a gray level is its own transform.
+%
+% The six wrappers differ only in the color model and in whether they take
+% three components or four, so generate them from two templates. Each takes the
+% \pkg{pgf} color model and the role (\texttt{fill} or \texttt{stroke}), and
+% reads the matching Lua entry point (\texttt{dichromacy.pgf\_rgb\_args} and
+% friends) off the model name. Each checks for its own command rather than
+% relying on all six arriving together.
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \__dichromacy_wrap_pgf_color_iii:nn #1#2
+{
+  \cs_if_exist:cT { pgfsys@color@#1@#2 }
+    {
+      \cs_new_eq:cc { __dichromacy_orig_pgf_#1_#2 }
+        { pgfsys@color@#1@#2 }
+      \cs_gset_protected:cpn { pgfsys@color@#1@#2 } ##1##2##3
+        {
+          \use:x
+            {
+              \exp_not:c { __dichromacy_orig_pgf_#1_#2 }
+              \directlua
+                {
+                  tex.sprint(dichromacy.pgf_#1_args(
+                    "\luaescapestring{##1}",~"\luaescapestring{##2}",~
+                    "\luaescapestring{##3}"))
+                }
+            }
+        }
+    }
+}
+\cs_new_protected:Npn \__dichromacy_wrap_pgf_color_iv:nn #1#2
+{
+  \cs_if_exist:cT { pgfsys@color@#1@#2 }
+    {
+      \cs_new_eq:cc { __dichromacy_orig_pgf_#1_#2 }
+        { pgfsys@color@#1@#2 }
+      \cs_gset_protected:cpn { pgfsys@color@#1@#2 } ##1##2##3##4
+        {
+          \use:x
+            {
+              \exp_not:c { __dichromacy_orig_pgf_#1_#2 }
+              \directlua
+                {
+                  tex.sprint(dichromacy.pgf_#1_args(
+                    "\luaescapestring{##1}",~"\luaescapestring{##2}",~
+                    "\luaescapestring{##3}",~"\luaescapestring{##4}"))
+                }
+            }
+        }
+    }
+}
+%    \end{macrocode}
+%
+% The patch runs once, at load time when \pkg{pgf} is already available and
+% otherwise at \cs{begin}\marg{document}. The boolean stops the second attempt
+% from wrapping the wrappers; without it the saving step would raise an
+% already-defined error. It is global because the wrappers it guards are
+% installed globally, so guard and effect cannot fall out of step should the
+% patch ever be called inside a group.
+%
+%    \begin{macrocode}
+\bool_new:N \g__dichromacy_pgf_colors_patched_bool
+\cs_new_protected:Npn \__dichromacy_patch_pgf_colors:
+{
+  \bool_if:NF \g__dichromacy_pgf_colors_patched_bool
+  {
+    \cs_if_exist:NT \pgfsys@color@rgb@fill
+    {
+      \bool_gset_true:N \g__dichromacy_pgf_colors_patched_bool
+      \clist_map_inline:nn { fill , stroke }
+        {
+          \__dichromacy_wrap_pgf_color_iii:nn { rgb } {##1}
+          \__dichromacy_wrap_pgf_color_iv:nn { cmyk } {##1}
+          \__dichromacy_wrap_pgf_color_iii:nn { cmy } {##1}
+        }
+    }
+  }
+}
+\__dichromacy_patch_pgf_colors:
+\AtBeginDocument { \__dichromacy_patch_pgf_colors: }
+%    \end{macrocode}
+%
 % \subsection{User Commands}
 %
 % \begin{macro}{\cvdtype}

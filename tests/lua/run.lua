@@ -288,6 +288,100 @@ local tests = {
 		end,
 	},
 	{
+		name = "pgf_rgb_args returns a brace-grouped transformed tuple",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
+
+			support.assert_equal(
+				dichromacy.pgf_rgb_args("1", "0", "0"),
+				"{0.265135}{0.420471}{0.000000}",
+				"rgb args should be brace-grouped for the system-layer command"
+			)
+		end,
+	},
+	{
+		name = "pgf_cmyk_args transforms CMY and preserves K",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
+
+			support.assert_equal(
+				dichromacy.pgf_cmyk_args("0", "1", "0", "0.5"),
+				"{0.256394}{0.174226}{0.160300}{0.5}",
+				"K should pass through untouched"
+			)
+		end,
+	},
+	{
+		name = "pgf color args pass through verbatim when disabled",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.disable()
+
+			-- pgf's own number formatting must survive rather than being
+			-- reformatted to six decimals.
+			support.assert_equal(dichromacy.pgf_rgb_args("1", "0", "0"), "{1}{0}{0}", "rgb disabled")
+			support.assert_equal(dichromacy.pgf_cmy_args("0", "1", "0"), "{0}{1}{0}", "cmy disabled")
+		end,
+	},
+	{
+		name = "pgf_rgb_args passes an unparseable component through unchanged",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
+
+			support.assert_equal(
+				dichromacy.pgf_rgb_args("1", "bogus", "0"),
+				"{1}{bogus}{0}",
+				"unparseable component should not be coerced to 0"
+			)
+		end,
+	},
+	{
+		name = "pgf_cmy_args transforms in the cmy model",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
+
+			-- Same three components as the cmyk case, so the two must agree on
+			-- everything but the K group.
+			support.assert_equal(
+				dichromacy.pgf_cmy_args("0", "1", "0"),
+				"{0.256394}{0.174226}{0.160300}",
+				"cmy should transform like the CMY part of cmyk"
+			)
+		end,
+	},
+	{
+		name = "pgf color args group by component, not by splitting on spaces",
+		run = function()
+			local dichromacy = support.load_dichromacy()
+			dichromacy.set_type("deuteranopia")
+			dichromacy.set_severity(1.0)
+			dichromacy.enable()
+
+			-- A passed-through component is one group however many spaces it
+			-- contains: the braces come from the component list, not from
+			-- rewriting spaces in an already-joined tuple.
+			support.assert_equal(
+				dichromacy.pgf_rgb_args("1", "0 0", "0"),
+				"{1}{0 0}{0}",
+				"a component with a space must not be split into two groups"
+			)
+		end,
+	},
+	{
 		name = "transform_current_color disabled returns unchanged",
 		run = function()
 			local dichromacy = support.load_dichromacy()
