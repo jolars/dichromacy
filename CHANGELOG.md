@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1](https://github.com/jolars/dichromacy/compare/v0.3.0...v0.3.1) (2026-09-16)
+
+### Bug Fixes
+- keep transform when `xxcolor` is loaded ([`9f3e59f`](https://github.com/jolars/dichromacy/commit/9f3e59f6022f3a3c38c9ba542624778d19c73fa5)), closes [#26](https://github.com/jolars/dichromacy/issues/26)
+- **docs:** use correct license note in source file ([`2ee1543`](https://github.com/jolars/dichromacy/commit/2ee154375335e513b2030c497bdec47484c7ca07))
+
 ## [0.3.0](https://github.com/jolars/dichromacy/compare/v0.2.0...v0.3.0) (2026-08-05)
 
 ### Breaking changes
